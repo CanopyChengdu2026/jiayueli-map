@@ -3,106 +3,51 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#fff7e8">
-  <meta name="description" content="嘉悦里周边地图，点击地标查看活动内页。">
-  <title>嘉悦里周边地图</title>
-  <style>
-    :root { color-scheme: light; --ink:#57351f; --accent:#b94d2e; --paper:#fff7e8; }
-    * { box-sizing:border-box; }
-    html { -webkit-text-size-adjust:100%; }
-    body { margin:0; background:var(--paper); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; }
-    button { font:inherit; }
-    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px max(16px,env(safe-area-inset-right)) 12px max(16px,env(safe-area-inset-left)); background:#fffaf0; border-bottom:1px solid #edd7af; }
-    .brand { font-size:16px; font-weight:750; line-height:1.35; }
-    .hint { font-size:12px; color:#856b52; text-align:right; }
-    .map-wrap { width:min(100%,1600px); margin:0 auto; }
-    .map-stage { position:relative; width:100%; line-height:0; overflow:hidden; }
-    .map-image { display:block; width:100%; height:auto; user-select:none; -webkit-user-drag:none; pointer-events:none; }
-    .spot { position:absolute; z-index:1; display:block; border:0; padding:0; margin:0; transform:translate(-50%,-50%); background:transparent; color:transparent; cursor:pointer; touch-action:manipulation; border-radius:18px; }
-    .spot:hover { background:rgba(255,255,255,.18); outline:2px solid rgba(143,64,31,.55); }
-    .spot:focus-visible { color:#fff; background:var(--accent); outline:3px solid #fff; box-shadow:0 0 0 5px var(--accent); font-size:11px; line-height:1.2; padding:3px; }
-    .directory { max-width:1400px; margin:0 auto; padding:18px 16px 32px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:9px; }
-    .place { min-height:68px; display:flex; flex-direction:column; justify-content:center; gap:4px; padding:9px 11px; border:1px solid #e8cba0; border-radius:10px; background:#fffdfa; color:var(--ink); text-align:left; cursor:pointer; }
-    .place-zh { font-size:14px; font-weight:700; line-height:1.2; }
-    .place-en { font-size:11px; font-weight:500; line-height:1.3; color:#866b52; overflow-wrap:anywhere; }
-    .place:hover,.place:focus-visible { border-color:var(--accent); outline:2px solid var(--accent); outline-offset:1px; }
-    .detail { display:none; min-height:100dvh; }
-    .detail-bar { position:sticky; top:0; z-index:3; display:flex; align-items:center; gap:12px; padding:8px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left)); background:rgba(255,250,240,.96); border-bottom:1px solid #ead5b5; backdrop-filter:blur(10px); }
-    .back { min-width:86px; min-height:44px; padding:7px 12px; border:1px solid #d7aa72; border-radius:9px; background:#fff; color:var(--ink); cursor:pointer; font-weight:700; }
-    .detail-title { font-size:15px; font-weight:700; }
-    .detail-image { display:block; width:min(100%,750px); height:auto; margin:0 auto; }
-    body.show-detail .map-page { display:none; }
-    body.show-detail .detail { display:block; }
-    @media(max-width:600px) { .topbar { padding-top:10px; padding-bottom:10px; } .brand { font-size:14px; } .hint { font-size:11px; } .directory { padding-top:14px; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .spot { min-width:28px; min-height:28px; } }
-  </style>
+  <meta name="theme-color" content="#f6f2e0">
+  <meta name="description" content="Discover Chengdu 悦见鲜活邻里。点击嘉悦里周边手绘地图上的地点，查看活动内页。">
+  <title>Discover Chengdu 悦见鲜活邻里</title>
+  <link rel="stylesheet" href="site.css?v=final2">
+  <script src="site.js?v=final2" defer></script>
 </head>
 <body>
   <main class="map-page" id="map-page">
-    <header class="topbar"><div class="brand">嘉悦里周边地图</div><div class="hint">轻点地标或下方名称查看内页</div></header>
-    <div class="map-wrap"><div class="map-stage" id="map-stage"><img class="map-image" src="assets/第二页.png" alt="嘉悦里周边地图" width="2243" height="1258" draggable="false"></div></div>
-    <section class="directory" aria-label="地标目录">
-      <div class="grid" id="place-list"></div>
+    <header class="mast">
+      <div class="container mast-inner">
+        <div>
+          <p class="brand-line">关于嘉悦里 <span lang="en">Canopy by Hilton Chengdu City Centre</span></p>
+          <h1><span lang="en">Discover Chengdu</span><span>悦见鲜活邻里</span></h1>
+        </div>
+        <p class="intro">轻点地图上的地点，查看活动内页。<span lang="en">Tap a place on the map to see its activity page.</span></p>
+      </div>
+    </header>
+    <div class="map-layout container">
+      <section class="map-section" aria-label="可点击的成都地图 Interactive Chengdu map">
+        <div class="map-heading"><div><h2 id="map">一张地图，走进成都</h2><p class="heading-en" lang="en">Explore Chengdu</p></div><p>轻点地标 <span lang="en">Tap a landmark</span></p></div>
+        <div class="explore-tools"><button id="zoom-out" aria-label="缩小地图">−</button><button id="zoom-in" aria-label="放大地图">＋</button><button id="map-reset">查看全图</button><button id="monthly-open" class="monthly-open" type="button"><img src="assets/每月活动贴纸.png" alt=""><span>点击查看本月活动<small lang="en">View this month’s activities</small></span></button></div><div class="map-viewport" id="map-viewport" tabindex="0" aria-label="地图区域。手机上可左右滑动。 Map area. Swipe left or right on a phone.">
+          <div class="map-stage" id="map-stage"><img class="map-image" src="assets/地图最新.png?v=final2" alt="成都中心城区手绘地图，标有嘉悦里和周边地点" width="5622" height="3508" draggable="false"></div>
+        </div>
+        <p class="map-note">左右滑动地图；轻点地标或熊猫查看详情。<span lang="en">Swipe sideways to explore. Tap a landmark for details.</span></p>
+      </section>
+      <aside class="preview" aria-labelledby="preview-title">
+        <h2 id="preview-title">嘉悦里活动内页</h2><p class="heading-en" lang="en">Canopy activity page</p>
+        <img class="preview-image" src="assets/intro-1.png" alt="嘉悦里活动内页预览" width="750" height="1334">
+        <p>点击地图地标，阅读对应活动内页。<span lang="en">Tap a landmark to read its activity page.</span></p>
+        <button class="preview-button" id="preview-open" type="button">查看嘉悦里内页 <span lang="en">Open Canopy page</span></button>
+      </aside>
+    </div>
+    <section class="directory container" aria-labelledby="directory-title">
+      <div class="directory-heading"><div><h2 id="directory-title">附近地点</h2><p class="heading-en" lang="en">Nearby places</p></div><p>也可从这里打开活动内页。<span lang="en">Open an activity page here, too.</span></p></div>
+      <div class="place-list" id="place-list"></div>
     </section>
   </main>
-  <main class="detail" id="detail" aria-labelledby="detail-title">
-    <div class="detail-bar"><button class="back" id="back" type="button">← 返回地图</button><span class="detail-title" id="detail-title"></span></div>
-    <img class="detail-image" id="detail-image" alt="" width="750" height="1334">
+  <main class="detail" id="detail" aria-labelledby="detail-title" hidden>
+    <div class="detail-bar"><div class="container detail-bar-inner"><button class="back" id="back" type="button">返回地图 <span lang="en">Back to map</span></button><span class="detail-brand">Discover Chengdu 悦见鲜活邻里</span></div></div>
+    <div class="detail-content container">
+      <div class="detail-heading"><div><h1 id="detail-title"></h1><p id="detail-title-en" lang="en"></p></div><button class="zoom-toggle" id="zoom-toggle" type="button" aria-pressed="false">查看全页 <span lang="en">Fit page</span></button></div>
+      <p class="reading-tip" id="reading-tip">简介适合屏幕宽度，可点按钮放大阅读。<span lang="en">Tap to enlarge the introduction.</span></p>
+      <div class="detail-scroll" id="detail-scroll"><img class="detail-image" id="detail-image" src="assets/intro-1.png" alt="" width="750" height="1334"></div>
+      <div id="detail-extras"></div><div class="map-only" id="map-only" hidden><p>周边美食内容整理中，敬请期待。</p><p lang="en">Dining recommendations are coming soon.</p><button class="back-secondary" id="back-secondary" type="button">返回地图 Back to map</button></div>
+    </div>
   </main>
-  <script>
-    const places = [
-      {id:'science',name:'四川科技馆',en:'Sichuan Science and Technology Museum',file:'四川科技馆页.png',x:47.2,y:22.1,w:12,h:18},
-      {id:'art',name:'四川美术馆',en:'Sichuan Art Museum',file:'四川美术馆页.png',x:30.2,y:31.5,w:10,h:15},
-      {id:'library',name:'四川省图书馆',en:'Sichuan Library',file:'四川省图书馆页.png',x:40.8,y:33.0,w:10,h:15},
-      {id:'theatre',name:'四川大剧院',en:'Sichuan Grand Theatre',file:'四川大剧院页.png',x:60.2,y:33.5,w:13,h:15},
-      {id:'museum',name:'成都博物馆',en:'Chengdu Museum',file:'成都博物馆页.png',x:36.8,y:47.0,w:13,h:15},
-      {id:'square',name:'天府广场',en:'Tianfu Square',file:'天府广场页.png',x:50.2,y:42.0,w:12,h:17},
-      {id:'park',name:'人民公园',en:"Chengdu People's Park",file:'人民公园页.png',x:19.8,y:58.0,w:12,h:12},
-      {id:'citang',name:'祠堂街',en:'Citang Street',file:'祠堂街页.png',x:24.5,y:45.5,w:11,h:10},
-      {id:'tianfuhong',name:'天府红',en:'Tianfu Hong',file:'天府红页.png',x:53.8,y:58.0,w:9,h:12},
-      {id:'cosmo',name:'COSMO',en:'COSMO Mall',file:'cosmo页.png',x:68.0,y:74.5,w:15,h:17},
-      {id:'ifs',name:'成都 IFS',en:'Chengdu IFS',file:'ifsye.png',x:82.5,y:50.0,w:10,h:16},
-      {id:'canopy',name:'嘉悦里',en:'Canopy Chengdu City Centre',file:'嘉悦里页.png',x:40.2,y:67.7,w:12,h:14}
-    ];
-    const stage = document.getElementById('map-stage');
-    const list = document.getElementById('place-list');
-    const detailImage = document.getElementById('detail-image');
-    const detailTitle = document.getElementById('detail-title');
-    const byId = Object.fromEntries(places.map(p => [p.id,p]));
-    const imagePath = file => 'assets/' + encodeURIComponent(file);
-    for (const p of places) {
-      const spot = document.createElement('button');
-      spot.type='button'; spot.className='spot'; spot.setAttribute('aria-label','查看'+p.name+' '+p.en+'内页');
-      spot.style.cssText=`left:${p.x}%;top:${p.y}%;width:${p.w}%;height:${p.h}%;`;
-      spot.addEventListener('click',()=>openPlace(p.id)); stage.appendChild(spot);
-      const item = document.createElement('button');
-      item.type='button'; item.className='place';
-      const zh = document.createElement('span'); zh.className='place-zh'; zh.textContent=p.name;
-      const en = document.createElement('span'); en.className='place-en'; en.lang='en'; en.textContent=p.en;
-      item.append(zh,en);
-      item.addEventListener('click',()=>openPlace(p.id)); list.appendChild(item);
-    }
-    let mapScroll = 0;
-    function render() {
-      const id = decodeURIComponent(location.hash.slice(1));
-      const p = byId[id];
-      document.body.classList.toggle('show-detail',!!p);
-      if (p) {
-        detailTitle.textContent=p.name;
-        detailImage.src=imagePath(p.file);
-        detailImage.alt=p.name+'原始内页图片';
-        document.title=p.name+'｜嘉悦里周边地图';
-        window.scrollTo(0,0);
-      } else {
-        detailImage.removeAttribute('src');
-        document.title='嘉悦里周边地图';
-        requestAnimationFrame(()=>window.scrollTo(0,mapScroll));
-      }
-    }
-    function openPlace(id) { mapScroll=window.scrollY; location.hash=id; }
-    document.getElementById('back').addEventListener('click',()=>{ location.hash=''; });
-    window.addEventListener('hashchange',render);
-    render();
-  </script>
 </body>
 </html>
