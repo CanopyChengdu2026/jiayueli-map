@@ -105,3 +105,5 @@ button:focus-visible{outline:3px solid var(--color-ink);outline-offset:3px}
 .monthly-open span{font-size:16px;font-weight:600}
 .monthly-open small{display:block;font-size:12px;font-weight:400;margin-top:2px}
 .monthly-open:hover span{text-decoration:underline}
+
+.spot--hotel::before{content:'▼';position:absolute;top:-24%;left:50%;color:#ff8300;font-size:clamp(13px,1.7vw,24px);line-height:1;text-shadow:0 1px 3px white,0 0 5px white;animation:hotel-bounce 1.2s ease-in-out infinite;pointer-events:none} @keyframes hotel-bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-9px)}} @media (prefers-reduced-motion:reduce){.spot--hotel::before{animation:none}}
